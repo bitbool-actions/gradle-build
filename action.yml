@@ -1,0 +1,33 @@
+name: "mvn-build"
+description: "build mvn app"
+inputs: 
+  JAVA_VERSION:
+    required: true
+  JAVA_DISTRIBUTION:
+    required: true
+  SKIP_TESTS:
+    required: false
+    default: "false"
+  GRADLE_VERSION:
+    required: true
+    default: "current"
+  BUILD_ARGS:
+    required: false
+    default: "build"     
+      
+runs:
+  using: "composite"
+  steps:
+  
+      - uses: actions/setup-java@v4
+        with:
+          distribution: ${{ inputs.JAVA_DISTRIBUTION }}
+          java-version: ${{ inputs.JAVA_VERSION }}
+
+      - name: Setup Gradle
+        uses: gradle/gradle-build-action@v2
+        with:
+          gradle-version: ${{ inputs.GRADLE_VERSION }}
+          
+      - name: Gradle build
+        run: ./gradlew  ${{ inputs.BUILD_ARGS }}
