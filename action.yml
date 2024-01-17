@@ -30,4 +30,5 @@ runs:
           gradle-version: ${{ inputs.GRADLE_VERSION }}
           
       - name: Gradle build
+        shell: bash
         run: ./gradlew  ${{ inputs.BUILD_ARGS }}
